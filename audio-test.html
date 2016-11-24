@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <input type='file' onchange="readMusic(this);" />
+    <audio controls id="music">
+      <source type="audio/mpeg">
+    </audio>
+</body>
+</html>
+
+<script>
+function readMusic(input) {
+  document.getElementById("music").setAttribute("src", input.files[0].name)
+}
+</script>
