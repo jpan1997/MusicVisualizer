@@ -1,15 +1,19 @@
-<!DOCTYPE html>
-<html>
-<body>
+
     <input type='file' onchange="readMusic(this);" />
-    <audio controls id="music">
+    <audio id="music" autoplay loop controls="play">
       <source type="audio/mpeg">
     </audio>
-</body>
-</html>
-
+    <script class="jsbin" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 <script>
+
+
 function readMusic(input) {
-  document.getElementById("music").setAttribute("src", input.files[0].name)
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            $('#music').attr('src', e.target.result)
+        };
+        reader.readAsDataURL(input.files[0]);
+    }
 }
 </script>
