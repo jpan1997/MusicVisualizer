@@ -1,0 +1,26 @@
+<!doctype html>
+<html>
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="master.js"></script>
+</head>
+
+<body>
+  <input type="file" onchange="readMusic(this)"/><br>
+  <audio id="audio-player" autoplay onloadedmetadata="initSeekBar()" ontimeupdate="updateSeekBar()">
+    <source type="audio/mpeg">
+  </audio>
+
+  <canvas id ="analyser_render"></canvas><br>
+
+  <button id="pause_play" onclick="toggleAudio()">Play</button>
+  <button id="repeat_toggle" onclick="toggleRepeat()">Repeat Off</button>
+  <br>
+
+  Volume<input id="volumeslider" type="range" min="0" max="100" value="100" step="1" style="width:200px" oninput="setVolume(value)"><span id="volumeValue">100</span><br>
+
+  <span id="currentTime">0:00</span>
+  <input id="seekbar" type="range" min="0" step="0.25" value="0" onmouseup="seekBarMouseUp()" oninput="seekBarMouseDown()" style="width: 248px">
+  <span id="maxTime">0:00</span>
+
+</body>

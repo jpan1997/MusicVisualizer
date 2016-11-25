@@ -1,0 +1,14 @@
+<!doctype html>
+<html>
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="master.js"></script>
+</head>
+
+<body>
+  <input type="file" onchange="readMusic(this)"/>
+  <audio id="audio-player" controls autoplay loop>
+    <source type="audio/mpeg">
+  </audio>
+  <canvas id = "analyser_render"></canvas>
+</body>
