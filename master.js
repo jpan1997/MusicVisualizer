@@ -1,8 +1,7 @@
-var canvas, ctx, source, context, analyser, fbc_array, bars, bar_x, bar_width, bar_height;
-
 $(document).ready(function() {
-  initMp3Player();
-  threeInit();
+    threeInit();
+    initMp3Player();
+  
 });
 
 function frameLooper(){
@@ -17,6 +16,16 @@ function frameLooper(){
         bar_width = 2;
         bar_height = -(fbc_array[i*2]/2);
         ctx.fillRect(bar_x, canvas.height, bar_width, bar_height);
+    }
+    updateSpheres();
+}
+
+function updateSpheres() {
+    var len = spheres.length;
+    for (var i=0; i<len; i++) {
+        var val = fbc_array[i];
+        hex = (val << 16) + (val << 8) + val;
+        spheres[i].material.color.setHex(hex);
     }
 }
 
