@@ -20,6 +20,7 @@ function threeInit() {
     // make the surrounding spheres
     // 6 spheres (256/2/20)
     for (var i=0; i<6; i++) {
+        var material = new THREE.MeshPhongMaterial({color: 0x00ff00, wireframe: true});
         sphere = new THREE.Mesh(geometry, material);
         sphere.position.set(2*Math.cos(i*Math.PI/3), 2*Math.sin(i*Math.PI/3), 0);
         spheres.push(sphere);
@@ -32,18 +33,21 @@ function threeInit() {
     function rotateSpheres() {
         var len = spheres.length;
         for (var i=0; i<len; i++) {
-            spheres[i].rotation.x += 0.01;
-            spheres[i].rotation.y += 0.01;
+            spheres[i].rotation.x += 0.01*i;
+            spheres[i].rotation.y += 0.01*i;
         }
     }
 
     function changeSphereColors() {
-        var len = spheres.length;
-        setTimeout(changeSphereColors, 10000);
+        var hex, color, len = spheres.length;
+        var change = function(i) {
+            var hex = "#000000".replace(/0/g,function(){return (~~(Math.random()*16)).toString(16);});
+            spheres[i].material.color = new THREE.Color(hex);
+            var size = Math.random();
+            spheres[i].scale.set(size, size, size);
+        }
         for (var i=0; i<len; i++) {
-            spheres[i].material.color.r = Math.random();
-            spheres[i].material.color.g = Math.random();
-            spheres[i].material.color.b = Math.random();
+            change(i);
         }
     }
     var render = function() {
@@ -56,4 +60,15 @@ function threeInit() {
         renderer.render(scene, camera);
     }
     render();
+}
+
+function updateSpheres() {
+    analyser.getByteFrequencyData(fbc_array);
+    var len = spheres.length;
+    setTimeout(changeSphereColors, 10000);
+    for (var i=0; i<len; i++) {
+        var val = fbc_array[i];
+        hex = (val << 16) + (val << 8) + val;
+        spheres[i].material.color.setHex(hex);
+    }
 }

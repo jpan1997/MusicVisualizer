@@ -2,6 +2,7 @@ var canvas, ctx, source, context, analyser, fbc_array, bars, bar_x, bar_width, b
 
 $(document).ready(function() {
   initMp3Player();
+  threeInit();
 });
 
 function frameLooper(){
