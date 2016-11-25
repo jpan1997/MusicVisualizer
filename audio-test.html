@@ -16,11 +16,23 @@
 				<source type="audio/mpeg">
 			</audio>
 		</div>
+
+
+
+    <input type='file' onchange="readMusic(this);" />
+    <audio id="music" autoplay loop controls="play">
+      <source type="audio/mpeg">
+    </audio>
+	<script>
+		function readMusic(input) {
+		    if (input.files && input.files[0]) {
+		        var reader = new FileReader();
+		        reader.onload = function (e) {
+		            $('#music').attr('src', e.target.result)
+		        };
+		        reader.readAsDataURL(input.files[0]);
+		    }
+		}
+	</script>
 </body>
 </html>
-
-<script>
-function readMusic(input) {
-  document.getElementById("music").setAttribute("src", input.files[0].name)
-}
-</script>

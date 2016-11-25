@@ -1,0 +1,66 @@
+<div data-video="LaJoDAXkSMw" data-autoplay="1" data-loop="1" id="youtube-audio"></div>
+<p id="music-name"></p>
+<input id="video-id-input" type="text" name="youtubevideoid" onchange="setID(this)">
+<p id="test"></p>
+
+<script type="text/javascript" src="https://www.youtube.com/iframe_api"></script>
+<script>
+  function setID(input) {
+    var text = document.getElementById("video-id-input").value;
+    var id_index = text.indexOf("=") + 1;
+    document.getElementById("youtube-audio").setAttribute("data-video", text.substr(id_index, 11));
+    onYouTubeIframeAPIReady();
+  }
+
+  var player;
+  function onYouTubeIframeAPIReady() {
+
+    var ctrlq = document.getElementById("youtube-audio");
+    ctrlq.innerHTML = '<img id="youtube-icon" src=""/><div id="youtube-player"></div>';
+    ctrlq.style.cssText = 'width:150px;margin:2em auto;cursor:pointer;cursor:hand;display:none';
+    ctrlq.onclick = toggleAudio;
+
+
+    player = new YT.Player('youtube-player', {
+      height: '0',
+      width: '0',
+      videoId: ctrlq.dataset.video,
+      playerVars: {
+        autoplay: ctrlq.dataset.autoplay,
+        loop: ctrlq.dataset.loop,
+      },
+      events: {
+        'onReady': onPlayerReady,
+        'onStateChange': onPlayerStateChange
+      }
+    });
+  }
+
+  function togglePlayButton(play) {
+    document.getElementById("youtube-icon").src = play ? "https://i.imgur.com/IDzX9gL.png" : "https://i.imgur.com/quyUPXN.png";
+  }
+
+  function toggleAudio() {
+    if ( player.getPlayerState() == 1 || player.getPlayerState() == 3 ) {
+      player.pauseVideo();
+      togglePlayButton(false);
+    } else {
+      player.playVideo();
+      togglePlayButton(true);
+    }
+  }
+
+  function onPlayerReady(event) {
+    player.setPlaybackQuality("small");
+    document.getElementById("youtube-audio").style.display = "block";
+    togglePlayButton(player.getPlayerState() !== 5);
+    document.getElementById("music-name").innerHTML = player.getVideoData().title;
+  }
+
+  function onPlayerStateChange(event) {
+    if (event.data === 0) {
+      togglePlayButton(false);
+    }
+  }
+
+</script>
