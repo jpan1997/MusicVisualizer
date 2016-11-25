@@ -22,10 +22,20 @@ function frameLooper(){
 
 function updateSpheres() {
     var len = spheres.length;
-    for (var i=0; i<len; i++) {
+    var change = function(i) {
         var val = fbc_array[i];
-        hex = (val << 16) + (val << 8) + val;
-        spheres[i].material.color.setHex(hex);
+        var val2 = fbc_array[2*i];
+        var val3 = fbc_array[3*i];
+        // hex = (val << 16) + (val << 8) + val;
+        // spheres[i].material.color = new THREE.Color(hex);
+        spheres[i].material.color = new THREE.Color(val/260, val2/260, val3/260);
+        // var size = val == 0 ? 0.9 : Math.log(Math.log(val));
+        var size = val == 0 ? 0.9 : val/260;
+        spheres[i].scale.set(size, size, size);
+        console.log(size);
+        }
+    for (var i=0; i<len; i++) {
+        change(i);
     }
 }
 
