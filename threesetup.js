@@ -36,9 +36,23 @@ function threeInit() {
             spheres[i].rotation.y += 0.01;
         }
     }
+
+    function changeSphereColors() {
+        var len = spheres.length;
+        setTimeout(changeSphereColors, 10000);
+        for (var i=0; i<len; i++) {
+            spheres[i].material.color.r = Math.random();
+            spheres[i].material.color.g = Math.random();
+            spheres[i].material.color.b = Math.random();
+        }
+    }
     var render = function() {
         requestAnimationFrame(render);
         rotateSpheres();
+        var num = Math.random();
+        if (num<0.1) {
+            changeSphereColors();
+        }
         renderer.render(scene, camera);
     }
     render();
