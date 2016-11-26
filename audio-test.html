@@ -6,6 +6,7 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r73/three.min.js"></script>
 	<script src="https://connect.soundcloud.com/sdk.js"></script>
+	<script src="CanvasInput.js"></script>
 	<script src="vars.js"></script>
 	<script src="OrbitControls.js"></script>
 	<script src="threesetup.js"></script>
@@ -15,15 +16,21 @@
 <body>
 	<div id="input">
 		<div id="scInput">
-			Soundcloud: <input id="soundcloud-url" type="text"><br>
-			<p id="scInputTitle"></p>
+			Soundcloud: <!--<input id="soundcloud-url" type="text" placeholder="SC URL"><br>-->
+			<div id="sc-url" contenteditable="true" data-ph="SoundCloud URL, Enter to submit">
+			</div>
+			<div id="songTitle">
+				I See Fire (Kygo Remix).mp3
+			</div>
 		</div>
 		<div id="fileInput">
 			File: <input type="file" onchange="readMusic(this)"/>
-			<audio id="audio-player" autoplay onloadedmetadata="initSeekBar()" ontimeupdate="updateSeekBar()">
+		</div>
+			
+			<audio id="audio-player" crossOrigin="anonymous" src="I See Fire (Kygo Remix).mp3" onloadedmetadata="initSeekBar()" ontimeupdate="updateSeekBar()">
 				<source type="audio/mpeg">
 			</audio>
-		</div>
+		
 	</div>
 	<div id="canvas">
 		<canvas id = "analyser_render"></canvas>

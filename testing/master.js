@@ -16,6 +16,7 @@ $(document).ready(function() {
   frameLooper();
   soundcloudURL = document.getElementById("soundcloud-url");
   audio = document.getElementById("audio-player");
+  audio.crossOrigin = "anonymous";
   volumeBar = document.getElementById("volumeBar");
   seekbar = document.getElementById("seekbar");
   pausePlay = document.getElementById("pause_play");

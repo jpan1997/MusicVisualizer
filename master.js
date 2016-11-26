@@ -15,11 +15,15 @@ function getElements() {
     volumeValue = document.getElementById("volumeValue");
     repeatToggle = document.getElementById("repeat_toggle");
 
-    soundcloudURL = document.getElementById("soundcloud-url");
+    soundcloudURL = document.getElementById("sc-url");
+    $("#sc-url").hover(function() {$("#sc-url").focus();},
+                        function() {$("#sc-url").blur();});
     //event listener for when user presses enter
     soundcloudURL.addEventListener("keypress", function(e) {
       if(e.which === 13) {
-        loadAudioFromSC(soundcloudURL.value);
+        loadAudioFromSC($("#sc-url").text());
+        console.log($("#sc-url").text())
+        e.preventDefault();
       }
   });
 }
@@ -77,6 +81,10 @@ function readMusic(input) {
     var objectUrl = URL.createObjectURL(file);
     audio.src = objectUrl;
     if(audio.autoplay == true) toggleAudio();
+    // change the song title displayed
+    var patt = /\\(.+\\)*(.+\.mp3|\.m4a)/i;
+    var res = input.value.match(patt);
+    $("#songTitle").html(res[res.length - 1]);
 }
 
 //play/pause button
@@ -148,6 +156,6 @@ function loadAudioFromSC(input) {
   function(sound) {
     scData = sound;
     audio.src = sound.stream_url + '?client_id=' + SC_CLIENT_ID;
-    $("#scInputTitle").html(sound.title);
+    $("#songTitle").html(sound.title);
   });
 }
