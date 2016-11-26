@@ -5,17 +5,25 @@
 	<title>Audio Visualizer</title>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r73/three.min.js"></script>
+	<script src="https://connect.soundcloud.com/sdk.js"></script>
 	<script src="vars.js"></script>
+	<script src="OrbitControls.js"></script>
 	<script src="threesetup.js"></script>
 	<script src="master.js"></script>
 	<link rel="stylesheet" href="main.css">
 </head>
 <body>
-	<div id="fileInput">
-		<input type="file" onchange="readMusic(this)"/>
-		<audio id="audio-player" autoplay onloadedmetadata="initSeekBar()" ontimeupdate="updateSeekBar()">
-    		<source type="audio/mpeg">
-  		</audio>
+	<div id="input">
+		<div id="scInput">
+			Soundcloud: <input id="soundcloud-url" type="text"><br>
+			<p id="scInputTitle"></p>
+		</div>
+		<div id="fileInput">
+			File: <input type="file" onchange="readMusic(this)"/>
+			<audio id="audio-player" autoplay onloadedmetadata="initSeekBar()" ontimeupdate="updateSeekBar()">
+				<source type="audio/mpeg">
+			</audio>
+		</div>
 	</div>
 	<div id="canvas">
 		<canvas id = "analyser_render"></canvas>
@@ -25,8 +33,11 @@
   		<button id="repeat_toggle" onclick="toggleRepeat()">Repeat Off</button>
   		<br>
 	</div>
-
-  		Volume <input id="volumeslider" type="range" min="0" max="100" value="100" step="1" style="width:200px" oninput="setVolume(value)"><span id="volumeValue">100</span><br>
+	<div id="volumeControl">
+  		Volume <input id="volumeslider" type="range" min="0" max="100" value="100" step="1" style="width:200px" oninput="setVolume(value)">
+		  <span id="volumeValue">100</span>
+		  <br>
+	</div>
 	
 	<div id="timeControl">
   		<span id="currentTime">0:00</span>

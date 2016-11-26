@@ -6,21 +6,23 @@ html, body {
   color: #FFF;
 }
 
-#fileInput {
+#input {
   position: absolute;
+  z-index: 1;
+  top: 5%;
 }
 
 #canvas {
   position: absolute;
-  top: 10%;
+  top: 20%;
 }
 
 #controls {
   position: absolute;
-  top: 5%;
+  top: 15%;
 }
 
-#volumeslider {
+#volumeControl {
   position: absolute;
   bottom: 10px;
 }
@@ -29,4 +31,8 @@ html, body {
   position: absolute;
   bottom: 5px;
   left: 50%;
+}
+
+#soundcloud-url {
+  min-width: 500px;
 }

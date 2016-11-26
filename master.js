@@ -15,6 +15,13 @@ function getElements() {
     volumeValue = document.getElementById("volumeValue");
     repeatToggle = document.getElementById("repeat_toggle");
 
+    soundcloudURL = document.getElementById("soundcloud-url");
+    //event listener for when user presses enter
+    soundcloudURL.addEventListener("keypress", function(e) {
+      if(e.which === 13) {
+        loadAudioFromSC(soundcloudURL.value);
+      }
+  });
 }
 
 // animation loop
@@ -132,4 +139,15 @@ function toggleRepeat() {
     audio.loop = false;
     repeatToggle.innerHTML = "Repeat Off";
   }
+}
+
+//load audio from soundcloud given url
+function loadAudioFromSC(input) {
+  SC.initialize({client_id: SC_CLIENT_ID});
+  SC.get("https://api.soundcloud.com/resolve", { url: input, client_id: SC_CLIENT_ID },
+  function(sound) {
+    scData = sound;
+    audio.src = sound.stream_url + '?client_id=' + SC_CLIENT_ID;
+    $("#scInputTitle").html(sound.title);
+  });
 }

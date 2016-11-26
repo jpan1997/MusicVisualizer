@@ -101,6 +101,10 @@ function threeInit() {
         }
     }
 
+    // attach the camera controls
+    controls = new THREE.OrbitControls(camera);
+    controls.addEventListener('change', render);
+
     var t = 0;
     var render = function() {
         requestAnimationFrame(render);
@@ -109,12 +113,11 @@ function threeInit() {
         t += 0.01;
         cycleSpheres(t);
 
-        
-        
         renderer.render(scene, camera);
+        this.controls.update();
     }
     window.addEventListener( 'mousemove', onMouseMove, false );
-    window.addEventListener('mousedown', onMouseClick, false);
+    // window.addEventListener('mousedown', onMouseClick, false);
     window.requestAnimationFrame(render);
     render();
 }
