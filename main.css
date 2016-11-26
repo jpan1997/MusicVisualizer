@@ -9,3 +9,24 @@ html, body {
 #fileInput {
   position: absolute;
 }
+
+#canvas {
+  position: absolute;
+  top: 10%;
+}
+
+#controls {
+  position: absolute;
+  top: 5%;
+}
+
+#volumeslider {
+  position: absolute;
+  bottom: 10px;
+}
+
+#timeControl {
+  position: absolute;
+  bottom: 5px;
+  left: 50%;
+}

@@ -13,10 +13,25 @@
 <body>
 	<div id="fileInput">
 		<input type="file" onchange="readMusic(this)"/>
-		<audio id="audio-player" controls autoplay loop>
-			<source type="audio/mpeg">
-		</audio>
+		<audio id="audio-player" autoplay onloadedmetadata="initSeekBar()" ontimeupdate="updateSeekBar()">
+    		<source type="audio/mpeg">
+  		</audio>
+	</div>
+	<div id="canvas">
 		<canvas id = "analyser_render"></canvas>
+	</div>
+	<div id="controls">
+		<button id="pause_play" onclick="toggleAudio()">Play</button>
+  		<button id="repeat_toggle" onclick="toggleRepeat()">Repeat Off</button>
+  		<br>
+	</div>
+
+  		Volume <input id="volumeslider" type="range" min="0" max="100" value="100" step="1" style="width:200px" oninput="setVolume(value)"><span id="volumeValue">100</span><br>
+	
+	<div id="timeControl">
+  		<span id="currentTime">0:00</span>
+  		<input id="seekbar" type="range" min="0" step="0.25" value="0" onmouseup="seekBarMouseUp()" oninput="seekBarMouseDown()" style="width: 248px">
+  		<span id="maxTime">0:00</span>
 	</div>
 </body>
 </html>

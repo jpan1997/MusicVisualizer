@@ -1,9 +1,23 @@
 $(document).ready(function() {
     threeInit();
     initMp3Player();
+    getElements();
   
 });
 
+function getElements() {
+    audio = document.getElementById("audio-player");
+    volumeBar = document.getElementById("volumeBar");
+    seekbar = document.getElementById("seekbar");
+    pausePlay = document.getElementById("pause_play");
+    currentTime = document.getElementById("currentTime");
+    maxTime = document.getElementById("maxTime");
+    volumeValue = document.getElementById("volumeValue");
+    repeatToggle = document.getElementById("repeat_toggle");
+
+}
+
+// animation loop
 function frameLooper(){
     window.requestAnimationFrame(frameLooper);
     fbc_array = new Uint8Array(analyser.frequencyBinCount);
@@ -23,16 +37,15 @@ function frameLooper(){
 function updateSpheres() {
     var len = spheres.length;
     var change = function(i) {
-        var val = fbc_array[i];
-        var val2 = fbc_array[2*i];
-        var val3 = fbc_array[3*i];
+        var val = fbc_array[i] == 0 ? 50 : fbc_array[i];
+        var val2 = fbc_array[i+10] == 0 ? 50 : fbc_array[i+10];
+        var val3 = fbc_array[i+20] == 0 ? 50 : fbc_array[i+20];
         // hex = (val << 16) + (val << 8) + val;
         // spheres[i].material.color = new THREE.Color(hex);
         spheres[i].material.color = new THREE.Color(val/260, val2/260, val3/260);
         // var size = val == 0 ? 0.9 : Math.log(Math.log(val));
-        var size = val == 0 ? 0.9 : val/260;
+        var size = val == 0 ? 0.9 : val/240;
         spheres[i].scale.set(size, size, size);
-        console.log(size);
         }
     for (var i=0; i<len; i++) {
         change(i);
@@ -51,8 +64,72 @@ function initMp3Player(){
     frameLooper();
 }
 
+//read audio upload from user
 function readMusic(input) {
     var file = input.files[0];
     var objectUrl = URL.createObjectURL(file);
-    $("#audio-player").attr("src", objectUrl);
+    audio.src = objectUrl;
+    if(audio.autoplay == true) toggleAudio();
+}
+
+//play/pause button
+function toggleAudio() {
+  if(pausePlay.innerHTML == "Pause") {
+    pausePlay.innerHTML = "Play";
+    audio.pause();
+  } else {
+    pausePlay.innerHTML = "Pause";
+    audio.play();
+  }
+}
+
+//change audio volume
+function setVolume(volume) {
+  audio.volume = volume/100;
+  volumeValue.innerHTML = volume;
+}
+
+//set max of seek bar when audio selected
+function initSeekBar() {
+  seekbar.max = audio.duration;
+  maxTime.innerHTML = toMinSec(audio.duration);
+}
+
+//update seek bar as music plays
+function updateSeekBar() {
+  if(!mouseDown) {
+    seekbar.value = audio.currentTime;
+    currentTime.innerHTML = toMinSec(audio.currentTime);
+  }
+}
+
+//jump to specified seekbar time
+function seekBarMouseUp() {
+  audio.currentTime = seekbar.value;
+  mouseDown = false;
+}
+
+//allow for seeking
+function seekBarMouseDown() {
+  mouseDown = true;
+  currentTime.innerHTML = toMinSec(seekbar.value);
+}
+
+//convert seconds to MIN:SEC format for display
+function toMinSec(seconds) {
+  var minutes = Math.floor(seconds / 60);
+  var seconds = Math.floor(seconds % 60);
+  var results = minutes + ":" + ((seconds < 10) ? ("0" + seconds) : seconds);
+  return results;
+}
+
+//toggle repeat button
+function toggleRepeat() {
+  if(repeatToggle.innerHTML == "Repeat Off") {
+    audio.loop = true;
+    repeatToggle.innerHTML = "Repeat On";
+  } else {
+    audio.loop = false;
+    repeatToggle.innerHTML = "Repeat Off";
+  }
 }
