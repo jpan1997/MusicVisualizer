@@ -18,6 +18,9 @@ function getElements() {
     soundcloudURL = document.getElementById("sc-url");
     $("#sc-url").hover(function() {$("#sc-url").focus();},
                         function() {$("#sc-url").blur();});
+    $("#volumeslider").click(function() {$("#volumeslider").focus();});
+    $("#seekbar").click(function() {$("#seekbar").focus();});
+
     //event listener for when user presses enter
     soundcloudURL.addEventListener("keypress", function(e) {
       if(e.which === 13) {
@@ -49,11 +52,11 @@ function updateSpheres() {
     var len = spheres.length;
     var change = function(i) {
         var val = fbc_array[i] == 0 ? 50 : fbc_array[i];
-        var val2 = fbc_array[i+10] == 0 ? 50 : fbc_array[i+10];
-        var val3 = fbc_array[i+20] == 0 ? 50 : fbc_array[i+20];
+        var val2 = fbc_array[i+10] == 0 ? 100 : fbc_array[i+10];
+        var val3 = fbc_array[i+20] == 0 ? 150 : fbc_array[i+20];
         // hex = (val << 16) + (val << 8) + val;
         // spheres[i].material.color = new THREE.Color(hex);
-        spheres[i].material.color = new THREE.Color(val/260, val2/260, val3/260);
+        spheres[i].material.color = new THREE.Color(val/300, val2/300, val3/300);
         // var size = val == 0 ? 0.9 : Math.log(Math.log(val));
         var size = val == 0 ? 0.9 : val/240;
         spheres[i].scale.set(size, size, size);
@@ -82,9 +85,11 @@ function readMusic(input) {
     audio.src = objectUrl;
     if(audio.autoplay == true) toggleAudio();
     // change the song title displayed
-    var patt = /\\(.+\\)*(.+\.mp3|\.m4a)/i;
+    var patt = /\\(.+\\)*(.+\.(mp3|m4a))/i;
     var res = input.value.match(patt);
-    $("#songTitle").html(res[res.length - 1]);
+    $("#songTitle").html(res[res.length - 2]);
+    audio.play();
+    pausePlay.innerHTML = "Pause";
 }
 
 //play/pause button
@@ -157,5 +162,7 @@ function loadAudioFromSC(input) {
     scData = sound;
     audio.src = sound.stream_url + '?client_id=' + SC_CLIENT_ID;
     $("#songTitle").html(sound.title);
+    audio.play();
+    pausePlay.innerHTML = "Pause";
   });
 }

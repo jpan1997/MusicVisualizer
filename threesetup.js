@@ -1,5 +1,6 @@
 function threeInit() {    
     scene = new THREE.Scene();
+    // scene.background = new THREE.Color(0x000000);
     aspectRatio = window.innerWidth/window.innerHeight;
     camera = new THREE.PerspectiveCamera(75, aspectRatio, 0.1, 1000);
     
@@ -26,17 +27,35 @@ function threeInit() {
         spheres.push(sphere);
         scene.add(sphere);
     }
+
+    // make random small spheres scattered around
+    var geometrySmall = new THREE.SphereGeometry(0.8, 32, 32);
+    for (var i=0; i<100; i++) {
+        var material = new THREE.MeshPhongMaterial({color: 0x00ff00, shading: THREE.FlatShading});
+        sphere = new THREE.Mesh(geometrySmall, material);
+        sphere.position.x = Math.random() * 2 - 1;
+        sphere.position.y = Math.random() * 2 - 1;
+        sphere.position.z = Math.random() * 2 - 1;
+        sphere.position.normalize();
+        sphere.position.multiplyScalar(10);
+        spheres.push(sphere);
+        scene.add(sphere);
+    }
+
     var len = spheres.length;
-    var light = new THREE.AmbientLight(0x404040);
-    var directionalLight = new THREE.DirectionalLight(0xFFFFFF, 0.5);
+    var light = new THREE.AmbientLight(0x404040, 1);
+    var directionalLight1 = new THREE.DirectionalLight(0xFFFFFF, 1);
+    var directionalLight2 = new THREE.DirectionalLight(0xFFFFFF, 1);
+    directionalLight2.position.set(-50,-50,-50);
     scene.add(light);
-    scene.add(directionalLight);
+    scene.add(directionalLight1);
+    scene.add(directionalLight2);
     camera.position.z = 5;
 
     function rotateSpheres() {
         for (var i=0; i<len; i++) {
-            spheres[i].rotation.x += 0.01*i;
-            spheres[i].rotation.y += 0.01*i;
+            spheres[i].rotation.x += 0.05;
+            spheres[i].rotation.y += 0.05;
         }
     }
 
@@ -54,7 +73,7 @@ function threeInit() {
     }
 
     function cycleSpheres(t) {
-        for (var i=1; i<len; i++) {
+        for (var i=1; i<7; i++) {
             spheres[i].position.x =  2*Math.cos(i*Math.PI/3 + t);
             spheres[i].position.y = 2*Math.sin(i*Math.PI/3 + t);
         }
@@ -103,7 +122,7 @@ function threeInit() {
 
     // attach the camera controls
     controls = new THREE.OrbitControls(camera);
-    controls.addEventListener('change', render);
+    controls.addEventListener('change', renderCamera);
 
     var t = 0;
     var render = function() {
@@ -114,7 +133,11 @@ function threeInit() {
         cycleSpheres(t);
 
         renderer.render(scene, camera);
-        this.controls.update();
+    }
+
+    var renderCamera = function() {
+        controls.update();
+        renderer.render(scene, camera);
     }
     window.addEventListener( 'mousemove', onMouseMove, false );
     // window.addEventListener('mousedown', onMouseClick, false);
