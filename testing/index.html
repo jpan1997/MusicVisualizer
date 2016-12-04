@@ -1,28 +1,56 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
 <head>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-  <script src="https://connect.soundcloud.com/sdk.js"></script>
-  <script src="master.js"></script>
+	<meta charset=utf-8>
+	<title>Audio Visualizer</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r73/three.min.js"></script>
+	<script src="https://connect.soundcloud.com/sdk.js"></script>
+	<script src="vars.js"></script>
+	<script src="OrbitControls.js"></script>
+	<script src="threesetup.js"></script>
+	<script src="master.js"></script>
+	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+	<link rel="stylesheet" href="main.css">
 </head>
 <body>
-  Soundcloud: <input id="soundcloud-url" type="text"><br>
-  Local File: <input type="file" onchange="readMusic(this)"/><br>
 
-  <audio id="audio-player" autoplay crossOrigin="anonymous" onloadedmetadata="initSeekBar()" ontimeupdate="updateSeekBar()">
-    <source type="audio/mpeg">
-  </audio>
+	<div id="input">
+		Soundcloud: <input id="soundcloud-url" type="text"><br>
+	  Local File: <input type="file" onchange="readMusic(this)"/><br>
+	  Microphone: <button id="mic_toggle" onclick="toggleMic()">Turn On</button><br>
+			<audio id="audio-player" autoplay crossOrigin="anonymous" onloadedmetadata="initSeekBar()" ontimeupdate="updateSeekBar()">
+				<source type="audio/mpeg">
+			</audio>
+	</div>
 
-  <canvas id ="analyser_render"></canvas><br>
+	<div id="controls">
+		<button id="pause_play" onclick="toggleAudio()">Play</button>
+  		<button id="repeat_toggle" onclick="toggleRepeat()">Repeat Off</button>
+  		<br>
+	</div>
 
-  <button id="pause_play" onclick="toggleAudio()">Pause</button>
-  <button id="repeat_toggle" onclick="toggleRepeat()">Repeat Off</button>
-  <br>
+	<div id="volumeControl">
+  		<!-- Volume <input id="volumeslider" type="range" min="0" max="100" value="100" step="1" style="width:200px" oninput="setVolume(value)">
+		  <span id="volumeValue">100</span> -->
 
-  Volume<input id="volumeslider" type="range" min="0" max="100" value="100" step="1" style="width:200px" oninput="setVolume(value)"><span id="volumeValue">100</span><br>
+			<input id="volumeslider" type="range" value="100" min = "0" max="100" step = "1" oninput="setVolume(value)">
+    	<img id="volumepic" src="img/volume.png">
+	</div>
 
-  <span id="currentTime">0:00</span>
-  <input id="seekbar" type="range" min="0" step="0.25" value="0" onmouseup="seekBarMouseUp()" oninput="seekBarMouseDown()" style="width: 248px">
-  <span id="maxTime">0:00</span>
+	<div id="timeControl">
+  		<span id="currentTime">0:00</span>
+  		<input id="seekbar" type="range" min="0" step="0.25" value="0" onmouseup="seekBarMouseUp()" oninput="seekBarMouseDown()" style="width: 248px">
+  		<span id="maxTime">0:00</span>
+	</div>
+
+	<div id="canvas">
+		<canvas id = "simple_fft"></canvas>
+	</div>
+
+	<div id="visualization">
+	</div>
+
+
 </body>
 </html>
