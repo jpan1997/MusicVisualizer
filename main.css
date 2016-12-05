@@ -76,8 +76,9 @@ Audio Controls
 }
 
 #audio-title {
-  margin-left: 40px;
-  margin-top: 5px;
+  position: absolute;
+  left: 35px;
+  padding-top: 5px;
   width: 800px;
 }
 
