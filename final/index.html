@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset=utf-8>
+	<title>Audio Visualizer</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r73/three.min.js"></script>
+	<script src="https://connect.soundcloud.com/sdk.js"></script>
+	<script src="vars.js"></script>
+	<script src="OrbitControls.js"></script>
+	<script src="threesetup.js"></script>
+	<script src="master.js"></script>
+	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+	<link rel="stylesheet" href="main.css">
+</head>
+<body>
+
+	<audio id="audio-player" autoplay crossOrigin="anonymous" onloadeddata="initSeekBar()" ontimeupdate="updateSeekBar()">
+		<source type="audio/mpeg">
+	</audio>
+
+	<div id="pulseToggle" onclick="togglePulse()">Pulsing Enabled</div>
+
+	<div id="audio-input">
+		<input id="soundcloud-url" type="text" value="Soundcloud URL">
+	  <input id="local-file" type="file" onchange="readMusic(this)"/>
+		<label id="file-button" for="local-file">Choose a file</label>
+	  <img id="mic_toggle" data-state="off" src="img/mic-off.png" onclick="toggleMic()">
+	</div>
+
+	<div id="audio-controls">
+		<div><img id="pause_play" src="img/play.png" onclick="toggleAudio()" data-state="play"></div>
+		<div id="audio-title"></div>
+		<div id="timeControl">
+	  		<span id="currentTime">0:00</span>
+	  		<input id="seekbar" type="range" min="0" max="0" step="1" value="0" onmouseup="seekBarMouseUp()" oninput="seekBarMouseDown()">
+	  		<span id="maxTime">0:00</span>
+		</div>
+	</div>
+
+	<div id="volumeControl">
+			<img id="volumepic" src="img/volume.png">
+			<input id="volumeslider" type="range" value="100" min = "0" max="100" step = "1" oninput="setVolume(value)">
+	</div>
+
+	<div id="canvas">
+		<canvas id = "simple_fft" hidden="hidden"></canvas>
+	</div>
+
+	<div id="visualization">
+	</div>
+
+
+</body>
+</html>
