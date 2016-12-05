@@ -8,6 +8,7 @@ $(document).ready(function() {
 function getElements() {
   soundcloudURL = document.getElementById("soundcloud-url");
   audio = document.getElementById("audio-player");
+  audio.crossOrigin = "anonymous";
   volumeBar = document.getElementById("volumeBar");
   seekbar = document.getElementById("seekbar");
   pausePlay = document.getElementById("pause_play");
@@ -17,6 +18,8 @@ function getElements() {
   repeatToggle = document.getElementById("repeat_toggle");
   micToggle = document.getElementById("mic_toggle");
 
+$("#audio-player").attr("src", "../I See Fire (Kygo Remix).mp3");
+audio.play().then(function() {console.log("success");});
   //event listener for when user presses enter
   soundcloudURL.addEventListener("keypress", function(e) {
       if(e.which === 13) {
@@ -91,7 +94,7 @@ function updateSphereSizeColor() {
         var val2 = (fbc_array[i + 10] == 0) ? 0x86 : fbc_array[i+10];
         var val3 = (fbc_array[i + 20] == 0) ? 0xBA : fbc_array[i+20];
         outerSpheres[i].material.color = new THREE.Color(val/350 + rOffset, val2/350 + gOffset, val3/350 + bOffset);
-        var size = (fbc_array[i] == 0) ? 0.15 : val/300;
+        var size = (fbc_array[i] == 0) ? 0.15 : val/260;
         outerSpheres[i].scale.set(size, size, size);
     }
     var changeInner = function(i) {
@@ -99,7 +102,7 @@ function updateSphereSizeColor() {
         var val2 = (fbc_array[i + 10] == 0) ? 0x86 : fbc_array[i+10] *2/3;
         var val3 = (fbc_array[i + 20] == 0) ? 0xBA : fbc_array[i+20] *2/3;
         innerSpheres[i].material.color = new THREE.Color(val/350 + rOffset, val2/350 + gOffset, val3/350 + bOffset);
-        var size = (fbc_array[i] == 0) ? 0.15 : val/300;
+        var size = (fbc_array[i] == 0) ? 0.15 : val/260;
         innerSpheres[i].scale.set(size, size, size);
     }
 

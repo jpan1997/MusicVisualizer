@@ -1,19 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset=utf-8>
+	<title>Audio Visualizer</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r73/three.min.js"></script>
+	<script src="https://connect.soundcloud.com/sdk.js"></script>
+	<script src="CanvasInput.js"></script>
+	<script src="vars.js"></script>
+	<script src="OrbitControls.js"></script>
+	<script src="threesetup.js"></script>
+	<script src="master.js"></script>
+	<link rel="stylesheet" href="main.css">
+</head>
+<body>
+	<div id="input">
+		<div id="scInput">
+			Soundcloud: <!--<input id="soundcloud-url" type="text" placeholder="SC URL"><br>-->
+			<div id="sc-url" contenteditable="true" data-ph="SoundCloud URL, Enter to submit">
+			</div>
+			<div id="songTitle">
+				I See Fire (Kygo Remix).mp3
+			</div>
+		</div>
+		<div id="fileInput">
+			File: <input type="file" onchange="readMusic(this)"/>
+		</div>
+			
+			<audio id="audio-player" crossOrigin="anonymous" src="I See Fire (Kygo Remix).mp3" onloadedmetadata="initSeekBar()" ontimeupdate="updateSeekBar()">
+				<source type="audio/mpeg">
+			</audio>
+		
+	</div>
+	<div id="canvas">
+		<canvas id = "analyser_render"></canvas>
+	</div>
+	<div id="controls">
+		<button id="pause_play" onclick="toggleAudio()">Play</button>
+  		<button id="repeat_toggle" onclick="toggleRepeat()">Repeat Off</button>
+  		<br>
+	</div>
+	<div id="volumeControl">
+  		Volume <input id="volumeslider" type="range" min="0" max="100" value="100" step="1" style="width:200px" oninput="setVolume(value)">
+		  <span id="volumeValue">100</span>
+		  <br>
+	</div>
+	
+	<div id="timeControl">
+  		<span id="currentTime">0:00</span>
+  		<input id="seekbar" type="range" min="0" step="0.25" value="0" onmouseup="seekBarMouseUp()" oninput="seekBarMouseDown()" style="width: 248px">
+  		<span id="maxTime">0:00</span>
+	</div>
+</body>
+</html>
 
-    <input type='file' onchange="readMusic(this);" />
-    <audio id="music" autoplay loop controls="play">
-      <source type="audio/mpeg">
-    </audio>
-    <script class="jsbin" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-<script>
-
-
-function readMusic(input) {
-    if (input.files && input.files[0]) {
-        var reader = new FileReader();
-        reader.onload = function (e) {
-            $('#music').attr('src', e.target.result)
-        };
-        reader.readAsDataURL(input.files[0]);
-    }
-}
-</script>
