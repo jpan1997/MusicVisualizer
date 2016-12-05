@@ -1,6 +1,5 @@
 html, body {
   margin: 0;
-  padding: 0;
   font-family: 'Roboto';
   font-weight: 100;
   font-size: 17px;
@@ -32,7 +31,6 @@ Volume Control
 ********************************************************************/
 #volumeControl {
   position: fixed;
-  left: 0;
   padding-top: 25px;
   margin-left: -20px;
 }
@@ -48,13 +46,12 @@ Volume Control
 #volumepic {
   width: 15px;
   height: 15px;
-  position: relative;
   margin: auto;
   display: block;
 }
 
 /********************************************************************
-Visualization
+Visualization Controls
 ********************************************************************/
 #pulseToggle {
   position: absolute;
@@ -72,11 +69,6 @@ Audio Controls
   left: 15px;
 }
 
-#audio-controls div {
-  position: relative;
-  display: block;
-}
-
 #pause_play {
   width: 30px;
   height: 30px;
@@ -84,9 +76,8 @@ Audio Controls
 }
 
 #audio-title {
-  position: absolute;
-  left: 10px;
-  padding-top: 5px;
+  margin-left: 40px;
+  margin-top: 5px;
   width: 800px;
 }
 
@@ -98,7 +89,6 @@ Audio Controls
 }
 
 #seekbar {
-  position: relative;
   width: 250px;
   height: 2px;
   vertical-align: middle;
@@ -111,13 +101,10 @@ Audio Sources
   width: 0.1px;
 	height: 0.1px;
 	overflow: hidden;
-	position: absolute;
 }
 
 #file-button {
-  display: block;
   float: left;
-  vertical-align: middle;
   padding: 6px;
 }
 
@@ -126,7 +113,7 @@ Audio Sources
 }
 
 #soundcloud-url {
-  width: 150px;
+  width: 200px;
   background-color: rgba(0,0,0,0);
   color: #FFFFFF;
   font-size: 17px;
@@ -134,9 +121,7 @@ Audio Sources
   border-bottom-style: solid;
   border-bottom-width: 1px;
   border-bottom-color: rgba(0,0,0,0);
-  display: block;
   float: left;
-  vertical-align: middle;
   padding: 6px;
 }
 
@@ -148,7 +133,6 @@ Audio Sources
 #mic_toggle {
   width: 25px;
   height: 25px;
-  display: block;
   float: left;
   padding: 5px;
 }

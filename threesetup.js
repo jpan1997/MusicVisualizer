@@ -1,18 +1,20 @@
 function threeInit() {
+    outerSpheres = [];
+    innerSpheres = [];
+
     scene = new THREE.Scene();
-    // scene.background = new THREE.Color(0x000000);
     aspectRatio = window.innerWidth/window.innerHeight;
     camera = new THREE.PerspectiveCamera(75, aspectRatio, 0.1, 1000);
 
     renderer = new THREE.WebGLRenderer();
     renderer.setSize(window.innerWidth - 4, window.innerHeight - 4);
-    document.getElementById("visualization").appendChild(renderer.domElement);
+    document.body.appendChild(renderer.domElement);
+
+    //rotate and zoom controls
+    controls = new THREE.OrbitControls(camera, renderer.domElement );
 
     var geometry = new THREE.SphereGeometry(1, 32, 32);
     var material = new THREE.MeshPhongMaterial({color: 0xFFFFFF, shading: THREE.FlatShading});
-
-    outerSpheres = [];
-    innerSpheres = [];
 
     // make the center sphere
     var sphere = new THREE.Mesh(geometry, material);
@@ -20,8 +22,7 @@ function threeInit() {
     innerSpheres.push(sphere);
     scene.add(sphere);
 
-    // make the surrounding spheres
-    // 6 spheres (256/2/20)
+    // make the 6 inner spheres
     if(!stargazeEnable) {
       for (var i=0; i<6; i++) {
           var material = new THREE.MeshPhongMaterial({color: 0xFFFFFF, shading: THREE.FlatShading});
@@ -34,7 +35,7 @@ function threeInit() {
 
     // make random small spheres scattered around
     var geometrySmall = new THREE.SphereGeometry(0.8, 32, 32);
-    for (var i=0; i<numOfOuterSpheres; i++) {
+    for (var i = 0; i <numOfOuterSpheres; i++) {
         var material = new THREE.MeshPhongMaterial({color: 0xFFFFFF, shading: THREE.FlatShading});
         sphere = new THREE.Mesh(geometrySmall, material);
         sphere.position.x = Math.random()*2-1;
@@ -46,7 +47,7 @@ function threeInit() {
         scene.add(sphere);
     }
 
-    //var len = spheres.length;
+    //add lighting to scene
     var light = new THREE.AmbientLight(0xF0F0F0, 1);
     var directionalLight1 = new THREE.DirectionalLight(0xFFFFFF, 1);
     var directionalLight2 = new THREE.DirectionalLight(0xFFFFFF, 1);
@@ -55,13 +56,6 @@ function threeInit() {
     scene.add(directionalLight1);
     scene.add(directionalLight2);
     camera.position.z = stargazeEnable? 0.1 : defaultCameraZoom;
-
-    function rotateSpheres() {
-        for (var i=0; i<len; i++) {
-            spheres[i].rotation.x += 0.05;
-            spheres[i].rotation.y += 0.05;
-        }
-    }
 
     // when mouseover spheres, light up
     var raycaster = new THREE.Raycaster();
@@ -85,47 +79,5 @@ function threeInit() {
         }
     }
 
-    function onMouseClick( event ) {
-        // calculate mouse position in normalized device coordinates
-        // (-1 to +1) for both components
-
-        mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
-        mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
-
-        // update the picking ray with the camera and mouse position
-        raycaster.setFromCamera( mouse, camera );
-
-        // calculate objects intersecting the picking ray
-        var intersects = raycaster.intersectObjects( scene.children );
-
-        for ( var i = 0; i < intersects.length; i++ ) {
-            var color = intersects[i].object.material.color;
-            intersects[i].object.material.specular.set(color);
-        }
-    }
-
-    // attach the camera controls
-    // controls
-    controls = new THREE.OrbitControls(camera, renderer.domElement );
-
-    var t = 0;
-    var rendering = function() {
-        requestAnimationFrame(rendering);
-        //rotateSpheres();
-        var num = Math.random();
-        t += 0.01;
-        //cycleSpheres(t);
-        //pulseOuterSpheres();
-
-        renderer.render(scene, camera);
-    }
-
-    var renderCamera = function() {
-        controls.update();
-        renderer.render(scene, camera);
-    }
-    window.addEventListener( 'mousemove', onMouseMove, false );
-    // window.addEventListener('mousedown', onMouseClick, false);
-    window.requestAnimationFrame(rendering);
-    rendering();
+    window.addEventListener('mousemove', onMouseMove, false );
 }
