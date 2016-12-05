@@ -52,6 +52,11 @@ Volume Control
 /********************************************************************
 Time Control
 ********************************************************************/
+#controls {
+  position: absolute;
+  bottom: 5%;
+}
+
 #timeControl {
   position: fixed;
 }
