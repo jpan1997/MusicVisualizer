@@ -116,7 +116,7 @@ function updateSphereSizeColor() {
         var val2 = (fbc_array[i + 10] == 0) ? 0x88 : fbc_array[i+10];
         var val3 = (fbc_array[i + 20] == 0) ? 0x88 : fbc_array[i+20];
         outerSpheres[i].material.color = new THREE.Color(val/350 + rOffset, val2/350 + gOffset, val3/350 + bOffset);
-        var size = (fbc_array[i] == 0) ? 0.15 : val/300;
+        var size = (fbc_array[i] == 0) ? 0.15 : val/260;
         outerSpheres[i].scale.set(size, size, size);
     }
     var changeInner = function(i) {
