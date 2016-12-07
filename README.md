@@ -7,3 +7,5 @@ This visualizer produces a smooth 3D atom-like visualization based on the amplit
 We utilize the javascript AudioContext object to apply the fast fourier transform (FFT) to the desired audio stream. The primary library we used to produce the visuals was three.js, which is a library that can produce smooth renderings of 3D objects.
 
 Users have the option of either uploading a local file, copying a soundcloud URL, or using their built-in computer microphone. 
+
+We uploaded our web app to the heroku server. The music visualizer can be found here: https://atomaudioviz.herokuapp.com/
