@@ -1,5 +1,6 @@
-Atom Audio Visualizer
+#Atom Audio Visualizer
 Written by Justin Pan and Peter Wang
+
 Last Updated 12/7/16
 
 This visualizer produces a smooth 3D atom-like visualization based on the amplitudes and frequencies of the song.
